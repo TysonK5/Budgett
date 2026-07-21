@@ -9,8 +9,11 @@ import { Reports } from '@/pages/Reports'
 import { Settings } from '@/pages/Settings'
 
 export default function App() {
+  // Match Vite `base` (e.g. /Budgett/ on GitHub Pages)
+  const basename = import.meta.env.BASE_URL.replace(/\/$/, '') || undefined
+
   return (
-    <BrowserRouter>
+    <BrowserRouter basename={basename}>
       <Routes>
         <Route element={<Layout />}>
           <Route index element={<Home />} />

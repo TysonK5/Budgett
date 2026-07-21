@@ -155,10 +155,29 @@ npm run server
 # Frontend + optional API together
 npm start
 
-# Production build
+# Production build (base path /Budgett/ for GitHub Pages)
 npm run build
 npm run preview
 ```
+
+### GitHub Pages
+
+Vite apps **must be built** before deploy. Publishing the repo root serves raw `index.html`, which loads `/src/main.tsx` and fails in the browser.
+
+This project is set up for:
+
+**https://tysonk5.github.io/Budgett/**
+
+1. Push to `main` (includes `.github/workflows/deploy-pages.yml`).
+2. On GitHub: **Settings → Pages → Build and deployment → Source: GitHub Actions**.
+3. Open the **Actions** tab and wait for **Deploy to GitHub Pages** to finish (or run it manually via **workflow_dispatch**).
+4. Visit **https://tysonk5.github.io/Budgett/** (not `…/src/main.tsx`).
+
+Notes:
+
+- `vite.config.ts` uses `base: '/Budgett/'` so asset URLs resolve under the repo name.
+- React Router uses the same basename.
+- Local-first mode works on Pages (IndexedDB in the browser). The optional Express server is **not** hosted on Pages.
 
 ### npm scripts
 
