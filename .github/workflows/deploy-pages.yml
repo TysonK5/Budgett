@@ -38,6 +38,10 @@ jobs:
         env:
           VITE_BASE: /Budgett/
 
+      # GitHub Pages has no server rewrite; serve SPA routes via 404.html
+      - name: SPA fallback for client routes
+        run: cp dist/index.html dist/404.html
+
       - name: Setup Pages
         uses: actions/configure-pages@v5
 
