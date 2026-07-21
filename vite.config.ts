@@ -7,7 +7,7 @@ import path from 'path'
 const base = process.env.VITE_BASE ?? '/Budgett/'
 
 export default defineConfig({
-  base,
+  base: '/Budgett/',
   plugins: [react()],
   resolve: {
     alias: {
