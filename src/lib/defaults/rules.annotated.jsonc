@@ -1,0 +1,588 @@
+{
+  "version": 4,
+  "description": "Default keyword preclassification rules. Matched case-insensitively against transaction description; first match wins. categoryId must exist in categories.json. Enhanced from personal transaction export 2026-07-20.",
+  "rules": [
+    // [NEW] NEW from CSV: Lowes Foods grocery before hardware LOWES
+    { "keyword": "LOWE S FOODS", "categoryId": "groceries-stores" },
+    // [NEW] NEW from CSV: Lowes Foods variant
+    { "keyword": "LOWES FOODS", "categoryId": "groceries-stores" },
+    // [REORDERED] REORDERED: before MOBIL (MOBIL is substring of TMOBILE)
+    { "keyword": "T-MOBILE", "categoryId": "comm-mobile" },
+    // [REORDERED] REORDERED: before MOBIL
+    { "keyword": "TMOBILE", "categoryId": "comm-mobile" },
+    // [NEW] NEW from CSV: Fidelity payroll deposits before FIDELITY investment rule
+    { "keyword": "FIDELITY TECHNOL", "categoryId": "income-salary" },
+    // [NEW] NEW from CSV: NSF fee before student-loan keywords in same desc
+    { "keyword": "NSF FEE", "categoryId": "fin-bank-fees" },
+    // [NEW] NEW from CSV: PayPal purchases
+    { "keyword": "PAYPAL PURCHASE", "categoryId": "shop-online" },
+    // [NEW] NEW from CSV: PayPal purchase (bank spacing)
+    { "keyword": "PAYPAL           PURCHASE", "categoryId": "shop-online" },
+    // [REORDERED] REORDERED: keep before UBER rideshare
+    { "keyword": "UBER EATS", "categoryId": "dining-casual" },
+    // [REORDERED] REORDERED: specific Google product before broader matches
+    { "keyword": "GOOGLE ONE", "categoryId": "fin-subscriptions" },
+    // [REORDERED] REORDERED: YouTube Premium
+    { "keyword": "YOUTUBE PREMIUM", "categoryId": "ent-streaming" },
+    // [NEW] NEW from CSV: GOOGLE *YouTubePre truncated
+    { "keyword": "YOUTUBEPRE", "categoryId": "ent-streaming" },
+    // [NEW] NEW from CSV: YouTube Premium variant
+    { "keyword": "YOUTUBE PRE", "categoryId": "ent-streaming" },
+    // [NEW] NEW from CSV: NordVPN via Google
+    { "keyword": "NORDVPN", "categoryId": "fin-subscriptions" },
+    // [NEW] NEW from CSV: Wyze via Google
+    { "keyword": "WYZE", "categoryId": "shop-electronics" },
+    // [NEW] NEW from CSV: Grok AI via Google
+    { "keyword": "GROK AI", "categoryId": "fin-subscriptions" },
+    // [NEW] NEW from CSV: Love's Travel Stops (LOVE S #)
+    { "keyword": "LOVE S", "categoryId": "transport-fuel" },
+    // [NEW] NEW from CSV: Love's Travel Stops
+    { "keyword": "LOVE'S", "categoryId": "transport-fuel" },
+    // [NEW] NEW from CSV: Chase credit card payment
+    { "keyword": "CHASE CREDIT", "categoryId": "fin-credit-cards" },
+    // [NEW] NEW from CSV: Fidelity brokerage ACH
+    { "keyword": "FID BKG SVC", "categoryId": "fin-investments" },
+    // [NEW] NEW from CSV: Fidelity Moneyline
+    { "keyword": "MONEYLINE", "categoryId": "fin-investments" },
+    // [NEW] NEW from CSV: student loan ACH code
+    { "keyword": "STUDNTLOAN", "categoryId": "fin-loans" },
+    // [NEW] NEW from CSV: student loan servicer
+    { "keyword": "ADVS ED SERV", "categoryId": "fin-loans" },
+    // [NEW] NEW from CSV: Rocket Money subscription
+    { "keyword": "ROCKET MONEY", "categoryId": "fin-subscriptions" },
+    // [NEW] NEW from CSV: Wells Fargo home mortgage
+    { "keyword": "WF HOME MTG", "categoryId": "housing-mortgage-rent" },
+    // [NEW] NEW from CSV: home mortgage ACH
+    { "keyword": "HOME MTG", "categoryId": "housing-mortgage-rent" },
+    // [NEW] NEW from CSV: Dominion Energy
+    { "keyword": "DOMINION ENERGY", "categoryId": "housing-electric" },
+    // [NEW] NEW from CSV (user): city utility → water
+    { "keyword": "CITY OF MEBANE", "categoryId": "housing-water" },
+    // [NEW] NEW from CSV (user): Compass Hovey → other-misc
+    { "keyword": "COMPASS HOVEY", "categoryId": "other-misc" },
+    // [NEW] NEW from CSV (user): SECU Foundation contributions
+    { "keyword": "SECU FOUNDATION", "categoryId": "other-uncategorized" },
+    // [NEW] NEW from CSV (user): Fidelnchovey → dining-casual
+    { "keyword": "FIDELNCHOVEY", "categoryId": "dining-casual" },
+    // [NEW] NEW from CSV: Sheetz
+    { "keyword": "SHEETZ", "categoryId": "transport-fuel" },
+    // [NEW] NEW from CSV: Marathon gas
+    { "keyword": "MARATHON", "categoryId": "transport-fuel" },
+    // [NEW] NEW from CSV: RaceWay
+    { "keyword": "RACEWAY", "categoryId": "transport-fuel" },
+    // [NEW] NEW from CSV: QuikTrip
+    { "keyword": "QUIKTRIP", "categoryId": "transport-fuel" },
+    // [NEW] NEW from CSV: QuikTrip store code
+    { "keyword": "QT ", "categoryId": "transport-fuel" },
+    // [NEW] NEW from CSV: Pilot Flying J
+    { "keyword": "PILOT FLYING", "categoryId": "transport-fuel" },
+    // [NEW] NEW from CSV: Flying J
+    { "keyword": "FLYING J", "categoryId": "transport-fuel" },
+    // [NEW] NEW from CSV: Scotchman
+    { "keyword": "SCOTCHMAN", "categoryId": "transport-fuel" },
+    // [NEW] NEW from CSV: Whitecross Mart (bank: fuel)
+    { "keyword": "WHITECROSS MART", "categoryId": "transport-fuel" },
+    // [NEW] NEW from CSV: BP gas (BP# code)
+    { "keyword": "BP#", "categoryId": "transport-fuel" },
+    // [NEW] NEW from CSV: BP gas
+    { "keyword": "BP ", "categoryId": "transport-fuel" },
+    // [NEW] NEW from CSV: Temu
+    { "keyword": "TEMU", "categoryId": "shop-online" },
+    // [NEW] NEW from CSV: Dollar General
+    { "keyword": "DOLLAR GENERAL", "categoryId": "shop-department" },
+    // [NEW] NEW from CSV: Tractor Supply
+    { "keyword": "TRACTOR SUPPLY", "categoryId": "shop-hardware" },
+    // [NEW] NEW from CSV: Rack Room Shoes
+    { "keyword": "RACK ROOM", "categoryId": "shop-clothing" },
+    // [NEW] NEW from CSV: Off Broadway Shoes
+    { "keyword": "OFF BROADWAY", "categoryId": "shop-clothing" },
+    // [NEW] NEW from CSV: Polo Factory Store
+    { "keyword": "POLO FACTORY", "categoryId": "shop-clothing" },
+    // [NEW] NEW from CSV: Tanger Outlets
+    { "keyword": "TANGER", "categoryId": "shop-clothing" },
+    // [NEW] NEW from CSV: ALDO shoes
+    { "keyword": "ALDO ", "categoryId": "shop-clothing" },
+    // [NEW] NEW from CSV: Mast General Store
+    { "keyword": "MAST STORE", "categoryId": "shop-clothing" },
+    // [NEW] NEW from CSV: Colonial Hardware
+    { "keyword": "COLONIAL HARDWA", "categoryId": "shop-hardware" },
+    // [NEW] NEW from CSV: Hosthelp
+    { "keyword": "HOSTHELP", "categoryId": "shop-online" },
+    // [NEW] NEW from CSV: Photo print online
+    { "keyword": "PHOTOPRINT", "categoryId": "shop-online" },
+    // [NEW] NEW from CSV: Cook Out
+    { "keyword": "COOK OUT", "categoryId": "dining-fast-food" },
+    // [NEW] NEW from CSV: Biscuitville
+    { "keyword": "BISCUITVILLE", "categoryId": "dining-fast-food" },
+    // [NEW] NEW from CSV: Bojangles
+    { "keyword": "BOJANGLES", "categoryId": "dining-fast-food" },
+    // [NEW] NEW from CSV: Whataburger
+    { "keyword": "WHATABURGER", "categoryId": "dining-fast-food" },
+    // [NEW] NEW from CSV: Zaxby's
+    { "keyword": "ZAXBY", "categoryId": "dining-fast-food" },
+    // [NEW] NEW from CSV: Waffle House
+    { "keyword": "WAFFLE HOUSE", "categoryId": "dining-fast-food" },
+    // [NEW] NEW from CSV: Hardee's
+    { "keyword": "HARDEE", "categoryId": "dining-fast-food" },
+    // [NEW] NEW from CSV: Arby's
+    { "keyword": "ARBY", "categoryId": "dining-fast-food" },
+    // [NEW] NEW from CSV: Five Guys
+    { "keyword": "FIVE GUYS", "categoryId": "dining-fast-food" },
+    // [NEW] NEW from CSV: Jersey Mike's
+    { "keyword": "JERSEY MIKE", "categoryId": "dining-casual" },
+    // [NEW] NEW from CSV: Cracker Barrel
+    { "keyword": "CRACKER BARREL", "categoryId": "dining-casual" },
+    // [NEW] NEW from CSV: First Watch
+    { "keyword": "FIRST WATCH", "categoryId": "dining-casual" },
+    // [NEW] NEW from CSV: Hwy 55 Burgers
+    { "keyword": "HWY 55", "categoryId": "dining-fast-food" },
+    // [NEW] NEW from CSV: Hwy 55 variant
+    { "keyword": "HIGHWAY 55", "categoryId": "dining-fast-food" },
+    // [NEW] NEW from CSV: Flik cafeteria
+    { "keyword": "FLIK ", "categoryId": "dining-casual" },
+    // [NEW] NEW from CSV: Cafe 100 NMW
+    { "keyword": "CAFE 100", "categoryId": "dining-coffee" },
+    // [NEW] NEW from CSV: Ciao Pizza
+    { "keyword": "CIAO PIZZA", "categoryId": "dining-casual" },
+    // [NEW] NEW from CSV: Toros Cantina
+    { "keyword": "TOROS CANTINA", "categoryId": "dining-casual" },
+    // [NEW] NEW from CSV: Merritts Grill
+    { "keyword": "MERRITTS GRILL", "categoryId": "dining-casual" },
+    // [NEW] NEW from CSV: Sake Japanese House
+    { "keyword": "SAKE JAPANESE", "categoryId": "dining-casual" },
+    // [NEW] NEW from CSV: Asian Harbor
+    { "keyword": "ASIAN HARBOR", "categoryId": "dining-casual" },
+    // [NEW] NEW from CSV: Sip Haven
+    { "keyword": "SIP HAVEN", "categoryId": "dining-coffee" },
+    // [NEW] NEW from CSV: The Pig Pin
+    { "keyword": "PIG PIN", "categoryId": "dining-casual" },
+    // [NEW] NEW from CSV: Dairi-O
+    { "keyword": "DAIRI-O", "categoryId": "dining-fast-food" },
+    // [NEW] NEW from CSV: Dairi-O variant
+    { "keyword": "DAIRI O", "categoryId": "dining-fast-food" },
+    // [NEW] NEW from CSV: Kokyu
+    { "keyword": "KOKYU", "categoryId": "dining-casual" },
+    // [NEW] NEW from CSV: Graham Soda Shop
+    { "keyword": "GRAHAM SODA", "categoryId": "dining-casual" },
+    // [NEW] NEW from CSV: Empanadas restaurants
+    { "keyword": "EMPANADAS", "categoryId": "dining-casual" },
+    // [NEW] NEW from CSV: Rosati's Pizza
+    { "keyword": "ROSATI", "categoryId": "dining-casual" },
+    // [NEW] NEW from CSV: Harbor Inn Seafood
+    { "keyword": "HARBOR INN", "categoryId": "dining-casual" },
+    // [NEW] NEW from CSV: Jimmy's Famous Hot Dogs
+    { "keyword": "JIMMY'S FAMOUS", "categoryId": "dining-fast-food" },
+    // [NEW] NEW from CSV: Jimmy's Famous variant
+    { "keyword": "JIMMYS FAMOUS", "categoryId": "dining-fast-food" },
+    // [NEW] NEW from CSV: Dampf Good BBQ
+    { "keyword": "DAMPF GOOD", "categoryId": "dining-casual" },
+    // [NEW] NEW from CSV: Alpaca Peruvian
+    { "keyword": "ALPACA PERUVIAN", "categoryId": "dining-casual" },
+    // [NEW] NEW from CSV: Lulu Bang Bang
+    { "keyword": "LULU BANG", "categoryId": "dining-casual" },
+    // [NEW] NEW from CSV: Knucklehead
+    { "keyword": "KNUCKLEHEAD", "categoryId": "dining-casual" },
+    // [NEW] NEW from CSV: Green Leafs
+    { "keyword": "GREEN LEAFS", "categoryId": "dining-casual" },
+    // [NEW] NEW from CSV: Yeung's Lotus
+    { "keyword": "YEUNG", "categoryId": "dining-casual" },
+    // [NEW] NEW from CSV: Catrinas Tequila
+    { "keyword": "CATRINAS", "categoryId": "dining-bars" },
+    // [NEW] NEW from CSV: Taqueria
+    { "keyword": "TAQUERIA", "categoryId": "dining-casual" },
+    // [NEW] NEW from CSV: Bangkok 54
+    { "keyword": "BANGKOK 54", "categoryId": "dining-casual" },
+    // [NEW] NEW from CSV: Sister Lius Food
+    { "keyword": "SISTER LIU", "categoryId": "dining-casual" },
+    // [NEW] NEW from CSV: The Crabby Cafe
+    { "keyword": "CRABBY CAF", "categoryId": "dining-casual" },
+    // [NEW] NEW from CSV: NC Jelly Donuts
+    { "keyword": "JELLY DONUTS", "categoryId": "dining-coffee" },
+    // [NEW] NEW from CSV: Mike's Icys
+    { "keyword": "MIKE'S ICYS", "categoryId": "dining-fast-food" },
+    // [NEW] NEW from CSV: Mike's Icys variant
+    { "keyword": "MIKES ICYS", "categoryId": "dining-fast-food" },
+    // [NEW] NEW from CSV: Grill Worx
+    { "keyword": "GRILL WORX", "categoryId": "dining-casual" },
+    // [NEW] NEW from CSV: Dippin Dots
+    { "keyword": "DIPPINDOTS", "categoryId": "dining-fast-food" },
+    // [NEW] NEW from CSV: Canteen vending
+    { "keyword": "CANTEEN", "categoryId": "dining-fast-food" },
+    // [NEW] NEW from CSV: Vitos vending
+    { "keyword": "VITOS VENDING", "categoryId": "dining-fast-food" },
+    // [NEW] NEW from CSV: Steve's Garden
+    { "keyword": "STEVES GARDEN", "categoryId": "groceries-specialty" },
+    // [NEW] NEW from CSV: Bulkogi
+    { "keyword": "BULKOGI", "categoryId": "dining-casual" },
+    // [NEW] NEW from CSV: Pepsi bottling/concession
+    { "keyword": "PEPSI BOTTLIN", "categoryId": "dining-fast-food" },
+    // [NEW] NEW from CSV (user default): Crafted Mebane
+    { "keyword": "CRAFTED-MEBANE", "categoryId": "dining-casual" },
+    // [NEW] NEW from CSV (user default): Crafted
+    { "keyword": "CRAFTED", "categoryId": "dining-casual" },
+    // [NEW] NEW from CSV (user default): Bright Penny
+    { "keyword": "BRIGHT PENNY", "categoryId": "dining-casual" },
+    // [NEW] NEW from CSV (user default): Wooden Nickel
+    { "keyword": "WOODEN NICKEL", "categoryId": "dining-casual" },
+    // [NEW] NEW from CSV (user default): Martinho's
+    { "keyword": "MARTINHO", "categoryId": "dining-casual" },
+    // [NEW] NEW from CSV (user default): Gnam Gnam gelato
+    { "keyword": "GNAM GNAM", "categoryId": "dining-casual" },
+    // [NEW] NEW from CSV: Bulwark exterminating
+    { "keyword": "BULWARK", "categoryId": "housing-repairs" },
+    // [NEW] NEW from CSV: Avance Care
+    { "keyword": "AVANCE CARE", "categoryId": "health-medical" },
+    // [NEW] NEW from CSV: Duke Health
+    { "keyword": "DUKE HEALTH", "categoryId": "health-medical" },
+    // [NEW] NEW from CSV: UNC Health
+    { "keyword": "UNC HEALTH", "categoryId": "health-medical" },
+    // [NEW] NEW from CSV: EmergeOrtho
+    { "keyword": "EMERGEORTHO", "categoryId": "health-medical" },
+    // [NEW] NEW from CSV: Burlington Pediatrics
+    { "keyword": "BURLINGTONPEDI", "categoryId": "health-medical" },
+    // [NEW] NEW from CSV: Alco Vets
+    { "keyword": "ALCOVETS", "categoryId": "pets-vet" },
+    // [NEW] NEW from CSV: Advance Auto Parts
+    { "keyword": "ADVANCE AUTO", "categoryId": "transport-maintenance" },
+    // [NEW] NEW from CSV: O'Reilly Auto Parts
+    { "keyword": "O REILLY", "categoryId": "transport-maintenance" },
+    // [NEW] NEW from CSV: O'Reilly variant
+    { "keyword": "OREILLY", "categoryId": "transport-maintenance" },
+    // [NEW] NEW from CSV: dealership service
+    { "keyword": "CHRYSLER", "categoryId": "transport-maintenance" },
+    // [NEW] NEW from CSV: Great Wolf Lodge
+    { "keyword": "GREAT WOLF", "categoryId": "ent-theme-parks" },
+    // [NEW] NEW from CSV: Great Wolf Lodge Concord
+    { "keyword": "GWL CONCORD", "categoryId": "ent-theme-parks" },
+    // [NEW] NEW from CSV: Durham Bulls
+    { "keyword": "DURHAM BULLS", "categoryId": "ent-sports" },
+    // [NEW] NEW from CSV: Buffaloe Lanes
+    { "keyword": "BUFFALOE LANES", "categoryId": "ent-hobbies" },
+    // [NEW] NEW from CSV: Heritage Amusements
+    { "keyword": "HERITAGE AMUSE", "categoryId": "ent-hobbies" },
+    // [NEW] NEW from CSV: NC DMV
+    { "keyword": "NC DMV", "categoryId": "transport-registration" },
+    // [NEW] NEW from CSV: NC State Parks
+    { "keyword": "NC STATE PARKS", "categoryId": "ent-hobbies" },
+    // [NEW] NEW from CSV: Scholastic Book Fair
+    { "keyword": "SCHOLASTIC", "categoryId": "edu-books" },
+    // [NEW] NEW from CSV: McElwee Law Firm
+    { "keyword": "MCELWEE", "categoryId": "other-misc" },
+    // [NEW] NEW from CSV: court fees
+    { "keyword": "KESNC COURT", "categoryId": "other-misc" },
+    // [NEW] NEW from CSV: 1870 Events
+    { "keyword": "1870 EVENTS", "categoryId": "ent-hobbies" },
+    // [NEW] NEW from CSV: Lil Donnie Walker (beauty)
+    { "keyword": "LIL DONNIE", "categoryId": "shop-personal-care" },
+    // [NEW] NEW from CSV (user default): Sharpies sports
+    { "keyword": "SHARPIES", "categoryId": "ent-sports" },
+    // [NEW] NEW from CSV (user default): Hos-Durham
+    { "keyword": "HOS-DURHAM", "categoryId": "other-misc" },
+    // [NEW] NEW from CSV: PayPal transfers/fallback
+    { "keyword": "PAYPAL", "categoryId": "other-transfers" },
+    { "keyword": "MORTGAGE", "categoryId": "housing-mortgage-rent" },
+    { "keyword": "HOME LOAN", "categoryId": "housing-mortgage-rent" },
+    { "keyword": "RENT PAYMENT", "categoryId": "housing-mortgage-rent" },
+    { "keyword": "APARTMENT RENT", "categoryId": "housing-mortgage-rent" },
+    { "keyword": "HOA ", "categoryId": "housing-hoa" },
+    { "keyword": "HOMEOWNERS ASSOC", "categoryId": "housing-hoa" },
+    { "keyword": "PROPERTY TAX", "categoryId": "housing-property-tax" },
+    { "keyword": "COUNTY TAX", "categoryId": "housing-property-tax" },
+    { "keyword": "STATE FARM HOME", "categoryId": "housing-insurance" },
+    { "keyword": "HOMEOWNERS INS", "categoryId": "housing-insurance" },
+    { "keyword": "RENTERS INS", "categoryId": "housing-insurance" },
+    { "keyword": "PLUMBING", "categoryId": "housing-repairs" },
+    { "keyword": "ELECTRICIAN", "categoryId": "housing-repairs" },
+    { "keyword": "HVAC", "categoryId": "housing-repairs" },
+    { "keyword": "PG&E", "categoryId": "housing-electric" },
+    { "keyword": "PGE", "categoryId": "housing-electric" },
+    { "keyword": "ELECTRIC", "categoryId": "housing-electric" },
+    { "keyword": "EDISON", "categoryId": "housing-electric" },
+    { "keyword": "DUKE ENERGY", "categoryId": "housing-electric" },
+    { "keyword": "CON EDISON", "categoryId": "housing-electric" },
+    { "keyword": "NATURAL GAS", "categoryId": "housing-gas" },
+    { "keyword": "GAS COMPANY", "categoryId": "housing-gas" },
+    { "keyword": "SOCALGAS", "categoryId": "housing-gas" },
+    { "keyword": "WATER BILL", "categoryId": "housing-water" },
+    { "keyword": "WATER DEPT", "categoryId": "housing-water" },
+    { "keyword": "SEWER", "categoryId": "housing-water" },
+    { "keyword": "WASTE MGMT", "categoryId": "housing-trash" },
+    { "keyword": "REPUBLIC SERVICES", "categoryId": "housing-trash" },
+    { "keyword": "TRASH", "categoryId": "housing-trash" },
+    { "keyword": "RECYCLING", "categoryId": "housing-trash" },
+    { "keyword": "COMCAST", "categoryId": "housing-internet" },
+    { "keyword": "XFINITY", "categoryId": "housing-internet" },
+    { "keyword": "SPECTRUM", "categoryId": "housing-internet" },
+    { "keyword": "FIOS", "categoryId": "housing-internet" },
+    { "keyword": "COX COMM", "categoryId": "housing-internet" },
+    { "keyword": "DIRECTV", "categoryId": "housing-cable" },
+    { "keyword": "DISH NETWORK", "categoryId": "housing-cable" },
+    { "keyword": "CABLE", "categoryId": "housing-cable" },
+    { "keyword": "TOYOTA FINANCIAL", "categoryId": "transport-auto-payment" },
+    { "keyword": "FORD CREDIT", "categoryId": "transport-auto-payment" },
+    { "keyword": "GM FINANCIAL", "categoryId": "transport-auto-payment" },
+    { "keyword": "HONDA FINANCIAL", "categoryId": "transport-auto-payment" },
+    { "keyword": "AUTO LOAN", "categoryId": "transport-auto-payment" },
+    { "keyword": "CAR PAYMENT", "categoryId": "transport-auto-payment" },
+    { "keyword": "TRUCK PAYMENT", "categoryId": "transport-auto-payment" },
+    { "keyword": "CAR LEASE", "categoryId": "transport-auto-payment" },
+    { "keyword": "GEICO", "categoryId": "transport-auto-insurance" },
+    { "keyword": "PROGRESSIVE", "categoryId": "transport-auto-insurance" },
+    { "keyword": "STATE FARM AUTO", "categoryId": "transport-auto-insurance" },
+    { "keyword": "ALLSTATE", "categoryId": "transport-auto-insurance" },
+    { "keyword": "AUTO INSUR", "categoryId": "transport-auto-insurance" },
+    { "keyword": "SHELL", "categoryId": "transport-fuel" },
+    { "keyword": "EXXON", "categoryId": "transport-fuel" },
+    { "keyword": "CHEVRON", "categoryId": "transport-fuel" },
+    { "keyword": "BP GAS", "categoryId": "transport-fuel" },
+    { "keyword": "MOBIL", "categoryId": "transport-fuel" },
+    { "keyword": "GAS STATION", "categoryId": "transport-fuel" },
+    { "keyword": "CIRCLE K", "categoryId": "transport-fuel" },
+    { "keyword": "WAWA", "categoryId": "transport-fuel" },
+    { "keyword": "7-ELEVEN", "categoryId": "transport-fuel" },
+    { "keyword": "METRO TRANSIT", "categoryId": "transport-transit" },
+    { "keyword": "MTA ", "categoryId": "transport-transit" },
+    { "keyword": "SUBWAY PASS", "categoryId": "transport-transit" },
+    { "keyword": "TRANSIT", "categoryId": "transport-transit" },
+    { "keyword": "PARKING", "categoryId": "transport-parking" },
+    { "keyword": "PARKWHIZ", "categoryId": "transport-parking" },
+    { "keyword": "EZ PASS", "categoryId": "transport-tolls" },
+    { "keyword": "EZPASS", "categoryId": "transport-tolls" },
+    { "keyword": "TOLL", "categoryId": "transport-tolls" },
+    { "keyword": "JIFFY LUBE", "categoryId": "transport-maintenance" },
+    { "keyword": "OIL CHANGE", "categoryId": "transport-maintenance" },
+    { "keyword": "AUTOZONE", "categoryId": "transport-maintenance" },
+    { "keyword": "PEP BOYS", "categoryId": "transport-maintenance" },
+    { "keyword": "DMV", "categoryId": "transport-registration" },
+    { "keyword": "VEHICLE REG", "categoryId": "transport-registration" },
+    { "keyword": "UBER", "categoryId": "transport-rideshare" },
+    { "keyword": "LYFT", "categoryId": "transport-rideshare" },
+    { "keyword": "WHOLE FOODS", "categoryId": "groceries-stores" },
+    { "keyword": "TRADER JOE", "categoryId": "groceries-stores" },
+    { "keyword": "KROGER", "categoryId": "groceries-stores" },
+    { "keyword": "SAFEWAY", "categoryId": "groceries-stores" },
+    { "keyword": "ALBERTSONS", "categoryId": "groceries-stores" },
+    { "keyword": "PUBLIX", "categoryId": "groceries-stores" },
+    { "keyword": "ALDI", "categoryId": "groceries-stores" },
+    { "keyword": "WEGMANS", "categoryId": "groceries-stores" },
+    { "keyword": "FOOD LION", "categoryId": "groceries-stores" },
+    { "keyword": "H-E-B", "categoryId": "groceries-stores" },
+    { "keyword": "SPROUTS", "categoryId": "groceries-stores" },
+    { "keyword": "GROCERY", "categoryId": "groceries-stores" },
+    { "keyword": "SUPERMARKET", "categoryId": "groceries-stores" },
+    { "keyword": "FARMERS MARKET", "categoryId": "groceries-farmers" },
+    { "keyword": "COSTCO", "categoryId": "groceries-bulk" },
+    { "keyword": "SAM'S CLUB", "categoryId": "groceries-bulk" },
+    { "keyword": "BJ'S", "categoryId": "groceries-bulk" },
+    { "keyword": "INSTACART", "categoryId": "groceries-online" },
+    { "keyword": "AMAZON FRESH", "categoryId": "groceries-online" },
+    { "keyword": "WHOLEFOODS", "categoryId": "groceries-stores" },
+    { "keyword": "STARBUCKS", "categoryId": "dining-coffee" },
+    { "keyword": "DUNKIN", "categoryId": "dining-coffee" },
+    { "keyword": "PEET", "categoryId": "dining-coffee" },
+    { "keyword": "COFFEE", "categoryId": "dining-coffee" },
+    { "keyword": "MCDONALD", "categoryId": "dining-fast-food" },
+    { "keyword": "TACO BELL", "categoryId": "dining-fast-food" },
+    { "keyword": "BURGER KING", "categoryId": "dining-fast-food" },
+    { "keyword": "WENDY", "categoryId": "dining-fast-food" },
+    { "keyword": "CHICK-FIL-A", "categoryId": "dining-fast-food" },
+    { "keyword": "CHICKFILA", "categoryId": "dining-fast-food" },
+    { "keyword": "SONIC DRIVE", "categoryId": "dining-fast-food" },
+    { "keyword": "POPEYES", "categoryId": "dining-fast-food" },
+    { "keyword": "CHIPOTLE", "categoryId": "dining-casual" },
+    { "keyword": "PANERA", "categoryId": "dining-casual" },
+    { "keyword": "SUBWAY", "categoryId": "dining-casual" },
+    { "keyword": "DOMINO", "categoryId": "dining-casual" },
+    { "keyword": "PIZZA HUT", "categoryId": "dining-casual" },
+    { "keyword": "OLIVE GARDEN", "categoryId": "dining-casual" },
+    { "keyword": "APPLEBEES", "categoryId": "dining-casual" },
+    { "keyword": "CHILIS", "categoryId": "dining-casual" },
+    { "keyword": "RESTAURANT", "categoryId": "dining-casual" },
+    { "keyword": "CAFE", "categoryId": "dining-coffee" },
+    { "keyword": "DOORDASH", "categoryId": "dining-casual" },
+    { "keyword": "GRUBHUB", "categoryId": "dining-casual" },
+    { "keyword": "BAR & GRILL", "categoryId": "dining-bars" },
+    { "keyword": "BREWERY", "categoryId": "dining-bars" },
+    { "keyword": "TAVERN", "categoryId": "dining-bars" },
+    { "keyword": "CVS", "categoryId": "health-pharmacy" },
+    { "keyword": "WALGREENS", "categoryId": "health-pharmacy" },
+    { "keyword": "RITE AID", "categoryId": "health-pharmacy" },
+    { "keyword": "PHARMACY", "categoryId": "health-pharmacy" },
+    { "keyword": "DENTAL", "categoryId": "health-dental" },
+    { "keyword": "ORTHODONT", "categoryId": "health-dental" },
+    { "keyword": "VISION", "categoryId": "health-vision" },
+    { "keyword": "LENSCRAFTERS", "categoryId": "health-vision" },
+    { "keyword": "EYE EXAM", "categoryId": "health-vision" },
+    { "keyword": "URGENT CARE", "categoryId": "health-medical" },
+    { "keyword": "HOSPITAL", "categoryId": "health-medical" },
+    { "keyword": "DOCTOR", "categoryId": "health-medical" },
+    { "keyword": "MEDICAL", "categoryId": "health-medical" },
+    { "keyword": "LABCORP", "categoryId": "health-medical" },
+    { "keyword": "QUEST DIAG", "categoryId": "health-medical" },
+    { "keyword": "BLUE CROSS", "categoryId": "health-insurance" },
+    { "keyword": "AETNA", "categoryId": "health-insurance" },
+    { "keyword": "CIGNA", "categoryId": "health-insurance" },
+    { "keyword": "UNITEDHEALTH", "categoryId": "health-insurance" },
+    { "keyword": "KAISER", "categoryId": "health-insurance" },
+    { "keyword": "THERAPY", "categoryId": "health-therapy" },
+    { "keyword": "PSYCHIAT", "categoryId": "health-therapy" },
+    { "keyword": "COUNSELING", "categoryId": "health-therapy" },
+    { "keyword": "PLANET FITNESS", "categoryId": "health-fitness" },
+    { "keyword": "LA FITNESS", "categoryId": "health-fitness" },
+    { "keyword": "24 HOUR FITNESS", "categoryId": "health-fitness" },
+    { "keyword": "EQUINOX", "categoryId": "health-fitness" },
+    { "keyword": "GYM ", "categoryId": "health-fitness" },
+    { "keyword": "PELOTON", "categoryId": "health-fitness" },
+    { "keyword": "NORDSTROM", "categoryId": "shop-clothing" },
+    { "keyword": "GAP ", "categoryId": "shop-clothing" },
+    { "keyword": "OLD NAVY", "categoryId": "shop-clothing" },
+    { "keyword": "H&M", "categoryId": "shop-clothing" },
+    { "keyword": "ZARA", "categoryId": "shop-clothing" },
+    { "keyword": "NIKE", "categoryId": "shop-clothing" },
+    { "keyword": "BEST BUY", "categoryId": "shop-electronics" },
+    { "keyword": "BESTBUY", "categoryId": "shop-electronics" },
+    { "keyword": "APPLE STORE", "categoryId": "shop-electronics" },
+    { "keyword": "APPLE.COM", "categoryId": "shop-electronics" },
+    { "keyword": "IKEA", "categoryId": "shop-home-goods" },
+    { "keyword": "BED BATH", "categoryId": "shop-home-goods" },
+    { "keyword": "POTTERY BARN", "categoryId": "shop-home-goods" },
+    { "keyword": "HOME DEPOT", "categoryId": "shop-hardware" },
+    { "keyword": "LOWE'S", "categoryId": "shop-hardware" },
+    { "keyword": "LOWES", "categoryId": "shop-hardware" },
+    { "keyword": "ACE HARDWARE", "categoryId": "shop-hardware" },
+    { "keyword": "MACY", "categoryId": "shop-department" },
+    { "keyword": "TARGET", "categoryId": "shop-department" },
+    { "keyword": "WALMART", "categoryId": "shop-department" },
+    { "keyword": "WAL-MART", "categoryId": "shop-department" },
+    { "keyword": "KOHL", "categoryId": "shop-department" },
+    { "keyword": "AMAZON", "categoryId": "shop-online" },
+    { "keyword": "AMZN", "categoryId": "shop-online" },
+    { "keyword": "EBAY", "categoryId": "shop-online" },
+    { "keyword": "ETSY", "categoryId": "shop-online" },
+    { "keyword": "SEPHORA", "categoryId": "shop-personal-care" },
+    { "keyword": "ULTA", "categoryId": "shop-personal-care" },
+    { "keyword": "SALON", "categoryId": "shop-personal-care" },
+    { "keyword": "BARBER", "categoryId": "shop-personal-care" },
+    { "keyword": "GREAT CLIPS", "categoryId": "shop-personal-care" },
+    { "keyword": "NETFLIX", "categoryId": "ent-streaming" },
+    { "keyword": "HULU", "categoryId": "ent-streaming" },
+    { "keyword": "DISNEY+", "categoryId": "ent-streaming" },
+    { "keyword": "DISNEY PLUS", "categoryId": "ent-streaming" },
+    { "keyword": "SPOTIFY", "categoryId": "ent-streaming" },
+    { "keyword": "APPLE MUSIC", "categoryId": "ent-streaming" },
+    { "keyword": "HBO", "categoryId": "ent-streaming" },
+    { "keyword": "MAX.COM", "categoryId": "ent-streaming" },
+    { "keyword": "AMC THEAT", "categoryId": "ent-movies" },
+    { "keyword": "REGAL", "categoryId": "ent-movies" },
+    { "keyword": "CINEMA", "categoryId": "ent-movies" },
+    { "keyword": "MOVIE", "categoryId": "ent-movies" },
+    { "keyword": "STEAM", "categoryId": "ent-hobbies" },
+    { "keyword": "PLAYSTATION", "categoryId": "ent-hobbies" },
+    { "keyword": "XBOX", "categoryId": "ent-hobbies" },
+    { "keyword": "NINTENDO", "categoryId": "ent-hobbies" },
+    { "keyword": "TICKETMASTER", "categoryId": "ent-sports" },
+    { "keyword": "DELTA AIR", "categoryId": "ent-airlines" },
+    { "keyword": "UNITED AIR", "categoryId": "ent-airlines" },
+    { "keyword": "AMERICAN AIR", "categoryId": "ent-airlines" },
+    { "keyword": "SOUTHWEST", "categoryId": "ent-airlines" },
+    { "keyword": "JETBLUE", "categoryId": "ent-airlines" },
+    { "keyword": "AIRLINE", "categoryId": "ent-airlines" },
+    { "keyword": "MARRIOTT", "categoryId": "ent-hotels" },
+    { "keyword": "HILTON", "categoryId": "ent-hotels" },
+    { "keyword": "HYATT", "categoryId": "ent-hotels" },
+    { "keyword": "HOTEL", "categoryId": "ent-hotels" },
+    { "keyword": "AIRBNB", "categoryId": "ent-vacation-rentals" },
+    { "keyword": "VRBO", "categoryId": "ent-vacation-rentals" },
+    { "keyword": "CRUISE", "categoryId": "ent-cruises" },
+    { "keyword": "CARNIVAL", "categoryId": "ent-cruises" },
+    { "keyword": "DISNEY WORLD", "categoryId": "ent-theme-parks" },
+    { "keyword": "UNIVERSAL STUDIOS", "categoryId": "ent-theme-parks" },
+    { "keyword": "SIX FLAGS", "categoryId": "ent-theme-parks" },
+    { "keyword": "TUITION", "categoryId": "edu-tuition" },
+    { "keyword": "UNIVERSITY", "categoryId": "edu-tuition" },
+    { "keyword": "COLLEGE", "categoryId": "edu-tuition" },
+    { "keyword": "TEXTBOOK", "categoryId": "edu-books" },
+    { "keyword": "BARNES & NOBLE", "categoryId": "edu-books" },
+    { "keyword": "UDEMY", "categoryId": "edu-courses" },
+    { "keyword": "COURSERA", "categoryId": "edu-courses" },
+    { "keyword": "SKILLSHARE", "categoryId": "edu-courses" },
+    { "keyword": "DAYCARE", "categoryId": "edu-childcare" },
+    { "keyword": "CHILD CARE", "categoryId": "edu-childcare" },
+    { "keyword": "SCHOOL SUPPLY", "categoryId": "edu-supplies" },
+    { "keyword": "OVERDRAFT", "categoryId": "fin-bank-fees" },
+    { "keyword": "BANK FEE", "categoryId": "fin-bank-fees" },
+    { "keyword": "SERVICE CHARGE", "categoryId": "fin-bank-fees" },
+    { "keyword": "FIDELITY", "categoryId": "fin-investments" },
+    { "keyword": "VANGUARD", "categoryId": "fin-investments" },
+    { "keyword": "SCHWAB", "categoryId": "fin-investments" },
+    { "keyword": "ROBINHOOD", "categoryId": "fin-investments" },
+    { "keyword": "E*TRADE", "categoryId": "fin-investments" },
+    { "keyword": "LIFE INSUR", "categoryId": "fin-insurance" },
+    { "keyword": "IRS ", "categoryId": "fin-taxes" },
+    { "keyword": "TAX PAYMENT", "categoryId": "fin-taxes" },
+    { "keyword": "STUDENT LOAN", "categoryId": "fin-loans" },
+    { "keyword": "NAVIENT", "categoryId": "fin-loans" },
+    { "keyword": "NELNET", "categoryId": "fin-loans" },
+    { "keyword": "SOFI LOAN", "categoryId": "fin-loans" },
+    { "keyword": "PERSONAL LOAN", "categoryId": "fin-loans" },
+    { "keyword": "CREDIT CARD PAYMENT", "categoryId": "fin-credit-cards" },
+    { "keyword": "AUTOPAY CREDIT", "categoryId": "fin-credit-cards" },
+    { "keyword": "ADOBE", "categoryId": "fin-subscriptions" },
+    { "keyword": "MICROSOFT 365", "categoryId": "fin-subscriptions" },
+    { "keyword": "GITHUB", "categoryId": "fin-subscriptions" },
+    { "keyword": "DROPBOX", "categoryId": "fin-subscriptions" },
+    { "keyword": "ICLOUD", "categoryId": "fin-subscriptions" },
+    { "keyword": "AWS ", "categoryId": "fin-subscriptions" },
+    { "keyword": "ZOOM.US", "categoryId": "fin-subscriptions" },
+    { "keyword": "BABYSIT", "categoryId": "family-childcare" },
+    { "keyword": "AFTER SCHOOL", "categoryId": "family-childcare" },
+    { "keyword": "DIAPER", "categoryId": "family-baby" },
+    { "keyword": "FORMULA", "categoryId": "family-baby" },
+    { "keyword": "BABY ", "categoryId": "family-baby" },
+    { "keyword": "TUTOR", "categoryId": "family-education" },
+    { "keyword": "VERIZON", "categoryId": "comm-mobile" },
+    { "keyword": "AT&T", "categoryId": "comm-mobile" },
+    { "keyword": "ATT WIRELESS", "categoryId": "comm-mobile" },
+    { "keyword": "ATT ", "categoryId": "comm-mobile" },
+    { "keyword": "MINT MOBILE", "categoryId": "comm-mobile" },
+    { "keyword": "VISIBLE", "categoryId": "comm-mobile" },
+    { "keyword": "CELL PHONE", "categoryId": "comm-mobile" },
+    { "keyword": "WIRELESS", "categoryId": "comm-mobile" },
+    { "keyword": "VET ", "categoryId": "pets-vet" },
+    { "keyword": "VETERINAR", "categoryId": "pets-vet" },
+    { "keyword": "PETCO", "categoryId": "pets-food" },
+    { "keyword": "PETSMART", "categoryId": "pets-food" },
+    { "keyword": "PET FOOD", "categoryId": "pets-food" },
+    { "keyword": "CHEWY", "categoryId": "pets-food" },
+    { "keyword": "PET INSUR", "categoryId": "pets-insurance" },
+    { "keyword": "GROOMING", "categoryId": "pets-grooming" },
+    { "keyword": "PET BOARD", "categoryId": "pets-grooming" },
+    { "keyword": "ATM WITHDRAWAL", "categoryId": "other-atm" },
+    { "keyword": "ATM ", "categoryId": "other-atm" },
+    { "keyword": "CASH WITHDRAWAL", "categoryId": "other-atm" },
+    { "keyword": "TRANSFER", "categoryId": "other-transfers" },
+    { "keyword": "VENMO", "categoryId": "other-transfers" },
+    { "keyword": "ZELLE", "categoryId": "other-transfers" },
+    { "keyword": "CASH APP", "categoryId": "other-transfers" },
+    { "keyword": "PAYROLL", "categoryId": "income-salary" },
+    { "keyword": "DIRECT DEP", "categoryId": "income-salary" },
+    { "keyword": "DIRECT DEPOSIT", "categoryId": "income-salary" },
+    { "keyword": "SALARY", "categoryId": "income-salary" },
+    { "keyword": "WAGES", "categoryId": "income-salary" },
+    { "keyword": "ADP ", "categoryId": "income-salary" },
+    { "keyword": "GUSTO", "categoryId": "income-salary" },
+    { "keyword": "FREELANCE", "categoryId": "income-freelance" },
+    { "keyword": "1099", "categoryId": "income-freelance" },
+    { "keyword": "DIVIDEND", "categoryId": "income-investment" },
+    { "keyword": "INTEREST PAID", "categoryId": "income-investment" },
+    { "keyword": "SOCIAL SECURITY", "categoryId": "income-benefits" },
+    { "keyword": "UNEMPLOYMENT", "categoryId": "income-benefits" },
+    { "keyword": "TAX REFUND", "categoryId": "income-refunds" },
+    { "keyword": "IRS TREAS", "categoryId": "income-refunds" },
+    { "keyword": "RENTAL INCOME", "categoryId": "income-rental" },
+    { "keyword": "DEPOSIT", "categoryId": "income-other" },
+    { "keyword": "TRANSFER IN", "categoryId": "income-other" },
+    { "keyword": "REFUND", "categoryId": "other-refunds" },
+    { "keyword": "VENMO CASHOUT", "categoryId": "income-other" }
+  ]
+}

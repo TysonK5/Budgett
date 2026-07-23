@@ -1,21 +1,42 @@
+import { useMemo } from 'react'
 import { Link } from 'react-router-dom'
 import { CategoryPieChart } from '@/components/CategoryPieChart'
 import { MonthlyBarChart } from '@/components/MonthlyBarChart'
 import { TrendLineChart } from '@/components/TrendLineChart'
 import { BudgetTracker } from '@/components/BudgetTracker'
+import { SortableTh } from '@/components/SortableTh'
 import { StatCard } from '@/components/StatCard'
+import { useDateFilteredTransactions } from '@/context/DateRangeContext'
 import { useTransactions } from '@/hooks/useTransactions'
 import { useCategories } from '@/hooks/useCategories'
 import { useBudgets } from '@/hooks/useBudgets'
 import { useCharts } from '@/hooks/useCharts'
+import { sortItems, useTableSort } from '@/hooks/useTableSort'
 import { formatCurrency } from '@/lib/utils'
 
+type MerchantSort = 'name' | 'amount'
+
 export function Dashboard() {
-  const { transactions, loading } = useTransactions()
+  const { transactions: allTransactions, loading } = useTransactions()
+  const transactions = useDateFilteredTransactions(allTransactions)
   const { categories } = useCategories()
   const { budgets, setBudget, period } = useBudgets()
-  const { spendingByParent, spendingByCategory, monthlySpending, totals, topMerchants } =
+  const { spendingByParent, monthlySpending, totals, topMerchants } =
     useCharts(transactions, categories)
+
+  const merchantSort = useTableSort<MerchantSort>(
+    'dashboard-merchants',
+    { field: 'amount', direction: 'desc' },
+    ['name', 'amount'] as const
+  )
+
+  const sortedMerchants = useMemo(
+    () =>
+      sortItems(topMerchants, merchantSort.field, merchantSort.direction, (m, field) =>
+        field === 'name' ? m.name : m.amount
+      ),
+    [topMerchants, merchantSort.field, merchantSort.direction]
+  )
 
   if (loading) {
     return (
@@ -30,7 +51,7 @@ export function Dashboard() {
     )
   }
 
-  if (transactions.length === 0) {
+  if (allTransactions.length === 0) {
     return (
       <div className="page-dashboard">
         <div className="page-header">
@@ -45,6 +66,22 @@ export function Dashboard() {
           <Link to="/upload" className="btn btn-primary">
             Upload statement
           </Link>
+        </div>
+      </div>
+    )
+  }
+
+  if (transactions.length === 0) {
+    return (
+      <div className="page-dashboard">
+        <div className="page-header">
+          <h1>Dashboard</h1>
+          <p className="text-muted">No transactions in the selected date range</p>
+        </div>
+        <div className="card empty-state text-center">
+          <p className="text-muted" style={{ marginBottom: 12 }}>
+            Try widening the date range filter in the top bar, or choose All time.
+          </p>
         </div>
       </div>
     )
@@ -80,23 +117,18 @@ export function Dashboard() {
       </div>
 
       <div className="charts-grid">
-        <div className="card chart-card">
+        <div className="card chart-card chart-wide">
           <h3>Spending by category</h3>
           <p className="text-xs text-muted" style={{ marginBottom: 8 }}>
             Parent rollup — subcategories are included in their parent
           </p>
-          <CategoryPieChart data={spendingByParent} />
+          <CategoryPieChart
+            data={spendingByParent}
+            storageKey="spending-by-category"
+            defaultType="donut"
+          />
         </div>
-        {spendingByCategory.some((c) => c.name.includes('›')) && (
-          <div className="card chart-card">
-            <h3>Spending by subcategory</h3>
-            <p className="text-xs text-muted" style={{ marginBottom: 8 }}>
-              Leaf-level detail (Parent › Child)
-            </p>
-            <CategoryPieChart data={spendingByCategory} />
-          </div>
-        )}
-        <div className="card chart-card">
+        <div className="card chart-card chart-wide">
           <h3>Monthly comparison</h3>
           <MonthlyBarChart data={monthlySpending} />
         </div>
@@ -124,16 +156,38 @@ export function Dashboard() {
           {topMerchants.length === 0 ? (
             <p className="text-muted text-sm">No spending merchants yet.</p>
           ) : (
-            <ul className="merchant-list">
-              {topMerchants.map((m, i) => (
-                <li key={i} className="flex justify-between items-center">
-                  <span className="text-sm desc-cell" title={m.name}>
-                    {m.name}
-                  </span>
-                  <span className="font-medium text-sm">{formatCurrency(m.amount)}</span>
-                </li>
-              ))}
-            </ul>
+            <table className="data-table">
+              <thead>
+                <tr>
+                  <SortableTh
+                    field="name"
+                    activeField={merchantSort.field}
+                    direction={merchantSort.direction}
+                    onToggle={(f) => merchantSort.toggleSort(f, 'asc')}
+                  >
+                    Merchant
+                  </SortableTh>
+                  <SortableTh
+                    field="amount"
+                    activeField={merchantSort.field}
+                    direction={merchantSort.direction}
+                    onToggle={(f) => merchantSort.toggleSort(f, 'desc')}
+                  >
+                    Amount
+                  </SortableTh>
+                </tr>
+              </thead>
+              <tbody>
+                {sortedMerchants.map((m) => (
+                  <tr key={m.name}>
+                    <td className="desc-cell" title={m.name}>
+                      {m.name}
+                    </td>
+                    <td className="font-medium">{formatCurrency(m.amount)}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
           )}
         </div>
       </div>

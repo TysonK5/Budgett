@@ -1,5 +1,5 @@
 import { useMemo, useState } from 'react'
-import type { Category, SortDirection, SortField, Transaction } from '@/types/transaction'
+import type { Category, SortField, Transaction } from '@/types/transaction'
 import { formatCurrency, formatDate } from '@/lib/utils'
 import {
   expandCategoryFilter,
@@ -8,6 +8,15 @@ import {
 import { CategorySelect } from '@/components/CategorySelect'
 import { ResizableTh } from '@/components/ResizableTh'
 import { useColumnWidths } from '@/hooks/useColumnWidths'
+import { useTableSort } from '@/hooks/useTableSort'
+
+const TX_SORT_FIELDS = [
+  'date',
+  'description',
+  'amount',
+  'type',
+  'categoryId',
+] as const satisfies readonly SortField[]
 
 interface TransactionTableProps {
   transactions: Transaction[]
@@ -36,9 +45,17 @@ export function TransactionTable({
   const [search, setSearch] = useState('')
   const [categoryFilter, setCategoryFilter] = useState('')
   const [typeFilter, setTypeFilter] = useState('')
-  const [sortField, setSortField] = useState<SortField>('date')
-  const [sortDir, setSortDir] = useState<SortDirection>('desc')
   const [page, setPage] = useState(0)
+  const {
+    field: sortField,
+    direction: sortDir,
+    toggleSort: toggleSortField,
+    sortIcon,
+  } = useTableSort<SortField>(
+    'transactions',
+    { field: 'date', direction: 'desc' },
+    TX_SORT_FIELDS
+  )
 
   const showActions = Boolean(onUpdateCategory || onDelete)
   const defaults = useMemo(() => {
@@ -84,6 +101,7 @@ export function TransactionTable({
       else if (sortField === 'description')
         cmp = a.description.localeCompare(b.description)
       else if (sortField === 'amount') cmp = a.amount - b.amount
+      else if (sortField === 'type') cmp = a.type.localeCompare(b.type)
       else if (sortField === 'categoryId')
         cmp = getCategoryLabel(catMap, a.categoryId).localeCompare(
           getCategoryLabel(catMap, b.categoryId)
@@ -99,18 +117,8 @@ export function TransactionTable({
   const pageItems = filtered.slice(safePage * pageSize, (safePage + 1) * pageSize)
 
   const toggleSort = (field: SortField) => {
-    if (sortField === field) {
-      setSortDir((d) => (d === 'asc' ? 'desc' : 'asc'))
-    } else {
-      setSortField(field)
-      setSortDir(field === 'date' ? 'desc' : 'asc')
-    }
+    toggleSortField(field, field === 'date' || field === 'amount' ? 'desc' : 'asc')
     setPage(0)
-  }
-
-  const sortIcon = (field: SortField) => {
-    if (sortField !== field) return '↕'
-    return sortDir === 'asc' ? '↑' : '↓'
   }
 
   const colKeys = showActions
@@ -141,7 +149,9 @@ export function TransactionTable({
           }}
           allowEmpty
           emptyLabel="All categories"
-          style={{ maxWidth: 220 }}
+          searchable
+          placeholder="Type to filter category…"
+          style={{ maxWidth: 260, minWidth: 200 }}
         />
         <select
           className="select"
@@ -215,10 +225,12 @@ export function TransactionTable({
               <ResizableTh
                 colKey="type"
                 width={widths.type ?? DEFAULT_WIDTHS.type}
+                className="sortable"
+                onClick={() => toggleSort('type')}
                 onResizeStart={startResize}
                 onResetWidth={(k) => setWidth(k, DEFAULT_WIDTHS.type)}
               >
-                Type
+                Type {sortIcon('type')}
               </ResizableTh>
               <ResizableTh
                 colKey="category"

@@ -1,0 +1,862 @@
+{
+  "version": 3,
+  "description": "Default parent/child category taxonomy. Edit this file to change system defaults. parentId null = parent; set parentId = child of that parent.",
+  "categories": [
+    {
+      "id": "housing",
+      "name": "Housing",
+      "color": "#4f46e5",
+      "icon": "🏠",
+      "parentId": null,
+      "isSystem": true
+    },
+    {
+      "id": "housing-mortgage-rent",
+      "name": "Mortgage / Rent",
+      "color": "#4f46e5",
+      "icon": "🔑",
+      "parentId": "housing",
+      "isSystem": true
+    },
+    {
+      "id": "housing-hoa",
+      "name": "HOA Fees",
+      "color": "#4f46e5",
+      "icon": "🏘️",
+      "parentId": "housing",
+      "isSystem": true
+    },
+    {
+      "id": "housing-property-tax",
+      "name": "Property Taxes",
+      "color": "#4f46e5",
+      "icon": "📜",
+      "parentId": "housing",
+      "isSystem": true
+    },
+    {
+      "id": "housing-insurance",
+      "name": "Home Insurance",
+      "color": "#4f46e5",
+      "icon": "🛡️",
+      "parentId": "housing",
+      "isSystem": true
+    },
+    {
+      "id": "housing-repairs",
+      "name": "Home Repairs",
+      "color": "#4f46e5",
+      "icon": "🔧",
+      "parentId": "housing",
+      "isSystem": true
+    },
+    {
+      "id": "housing-electric",
+      "name": "Electricity",
+      "color": "#4f46e5",
+      "icon": "⚡",
+      "parentId": "housing",
+      "isSystem": true
+    },
+    {
+      "id": "housing-gas",
+      "name": "Gas / Natural Gas",
+      "color": "#4f46e5",
+      "icon": "🔥",
+      "parentId": "housing",
+      "isSystem": true
+    },
+    {
+      "id": "housing-water",
+      "name": "Water / Sewer",
+      "color": "#4f46e5",
+      "icon": "💧",
+      "parentId": "housing",
+      "isSystem": true
+    },
+    {
+      "id": "housing-trash",
+      "name": "Trash / Recycling",
+      "color": "#4f46e5",
+      "icon": "🗑️",
+      "parentId": "housing",
+      "isSystem": true
+    },
+    {
+      "id": "housing-internet",
+      "name": "Internet / Broadband",
+      "color": "#4f46e5",
+      "icon": "🌐",
+      "parentId": "housing",
+      "isSystem": true
+    },
+    {
+      "id": "housing-cable",
+      "name": "Cable / Satellite TV",
+      "color": "#4f46e5",
+      "icon": "📡",
+      "parentId": "housing",
+      "isSystem": true
+    },
+    {
+      "id": "housing-phone",
+      "name": "Phone (Home)",
+      "color": "#4f46e5",
+      "icon": "☎️",
+      "parentId": "housing",
+      "isSystem": true
+    },
+    {
+      "id": "transportation",
+      "name": "Transportation",
+      "color": "#0891b2",
+      "icon": "🚗",
+      "parentId": null,
+      "isSystem": true
+    },
+    {
+      "id": "transport-auto-payment",
+      "name": "Auto Payment",
+      "color": "#0891b2",
+      "icon": "🚙",
+      "parentId": "transportation",
+      "isSystem": true
+    },
+    {
+      "id": "transport-auto-insurance",
+      "name": "Auto Insurance",
+      "color": "#0891b2",
+      "icon": "📋",
+      "parentId": "transportation",
+      "isSystem": true
+    },
+    {
+      "id": "transport-fuel",
+      "name": "Fuel / Gas",
+      "color": "#0891b2",
+      "icon": "⛽",
+      "parentId": "transportation",
+      "isSystem": true
+    },
+    {
+      "id": "transport-transit",
+      "name": "Public Transit",
+      "color": "#0891b2",
+      "icon": "🚇",
+      "parentId": "transportation",
+      "isSystem": true
+    },
+    {
+      "id": "transport-parking",
+      "name": "Parking",
+      "color": "#0891b2",
+      "icon": "🅿️",
+      "parentId": "transportation",
+      "isSystem": true
+    },
+    {
+      "id": "transport-tolls",
+      "name": "Tolls",
+      "color": "#0891b2",
+      "icon": "🛣️",
+      "parentId": "transportation",
+      "isSystem": true
+    },
+    {
+      "id": "transport-maintenance",
+      "name": "Vehicle Maintenance",
+      "color": "#0891b2",
+      "icon": "🛠️",
+      "parentId": "transportation",
+      "isSystem": true
+    },
+    {
+      "id": "transport-registration",
+      "name": "Vehicle Registration",
+      "color": "#0891b2",
+      "icon": "🏷️",
+      "parentId": "transportation",
+      "isSystem": true
+    },
+    {
+      "id": "transport-rideshare",
+      "name": "Rideshare",
+      "color": "#0891b2",
+      "icon": "🚕",
+      "parentId": "transportation",
+      "isSystem": true
+    },
+    {
+      "id": "groceries",
+      "name": "Groceries",
+      "color": "#16a34a",
+      "icon": "🛒",
+      "parentId": null,
+      "isSystem": true
+    },
+    {
+      "id": "groceries-stores",
+      "name": "Grocery Stores",
+      "color": "#16a34a",
+      "icon": "🏪",
+      "parentId": "groceries",
+      "isSystem": true
+    },
+    {
+      "id": "groceries-farmers",
+      "name": "Farmers Markets",
+      "color": "#16a34a",
+      "icon": "🥬",
+      "parentId": "groceries",
+      "isSystem": true
+    },
+    {
+      "id": "groceries-bulk",
+      "name": "Bulk Stores",
+      "color": "#16a34a",
+      "icon": "📦",
+      "parentId": "groceries",
+      "isSystem": true
+    },
+    {
+      "id": "groceries-specialty",
+      "name": "Specialty Food",
+      "color": "#16a34a",
+      "icon": "🧀",
+      "parentId": "groceries",
+      "isSystem": true
+    },
+    {
+      "id": "groceries-online",
+      "name": "Online Grocery",
+      "color": "#16a34a",
+      "icon": "📱",
+      "parentId": "groceries",
+      "isSystem": true
+    },
+    {
+      "id": "food-dining",
+      "name": "Food & Dining",
+      "color": "#ea580c",
+      "icon": "🍽️",
+      "parentId": null,
+      "isSystem": true
+    },
+    {
+      "id": "dining-fast-food",
+      "name": "Fast Food",
+      "color": "#ea580c",
+      "icon": "🍔",
+      "parentId": "food-dining",
+      "isSystem": true
+    },
+    {
+      "id": "dining-casual",
+      "name": "Casual Dining",
+      "color": "#ea580c",
+      "icon": "🥗",
+      "parentId": "food-dining",
+      "isSystem": true
+    },
+    {
+      "id": "dining-fine",
+      "name": "Fine Dining",
+      "color": "#ea580c",
+      "icon": "🍷",
+      "parentId": "food-dining",
+      "isSystem": true
+    },
+    {
+      "id": "dining-coffee",
+      "name": "Coffee Shops",
+      "color": "#ea580c",
+      "icon": "☕",
+      "parentId": "food-dining",
+      "isSystem": true
+    },
+    {
+      "id": "dining-bars",
+      "name": "Bars / Nightlife",
+      "color": "#ea580c",
+      "icon": "🍻",
+      "parentId": "food-dining",
+      "isSystem": true
+    },
+    {
+      "id": "healthcare",
+      "name": "Healthcare",
+      "color": "#dc2626",
+      "icon": "💊",
+      "parentId": null,
+      "isSystem": true
+    },
+    {
+      "id": "health-medical",
+      "name": "Medical",
+      "color": "#dc2626",
+      "icon": "🩺",
+      "parentId": "healthcare",
+      "isSystem": true
+    },
+    {
+      "id": "health-dental",
+      "name": "Dental",
+      "color": "#dc2626",
+      "icon": "🦷",
+      "parentId": "healthcare",
+      "isSystem": true
+    },
+    {
+      "id": "health-vision",
+      "name": "Vision",
+      "color": "#dc2626",
+      "icon": "👓",
+      "parentId": "healthcare",
+      "isSystem": true
+    },
+    {
+      "id": "health-pharmacy",
+      "name": "Pharmacy",
+      "color": "#dc2626",
+      "icon": "💊",
+      "parentId": "healthcare",
+      "isSystem": true
+    },
+    {
+      "id": "health-insurance",
+      "name": "Health Insurance",
+      "color": "#dc2626",
+      "icon": "🏥",
+      "parentId": "healthcare",
+      "isSystem": true
+    },
+    {
+      "id": "health-therapy",
+      "name": "Therapy / Mental Health",
+      "color": "#dc2626",
+      "icon": "🧠",
+      "parentId": "healthcare",
+      "isSystem": true
+    },
+    {
+      "id": "health-fitness",
+      "name": "Fitness",
+      "color": "#dc2626",
+      "icon": "🏋️",
+      "parentId": "healthcare",
+      "isSystem": true
+    },
+    {
+      "id": "shopping",
+      "name": "Shopping",
+      "color": "#9333ea",
+      "icon": "👗",
+      "parentId": null,
+      "isSystem": true
+    },
+    {
+      "id": "shop-clothing",
+      "name": "Clothing",
+      "color": "#9333ea",
+      "icon": "👕",
+      "parentId": "shopping",
+      "isSystem": true
+    },
+    {
+      "id": "shop-electronics",
+      "name": "Electronics",
+      "color": "#9333ea",
+      "icon": "💻",
+      "parentId": "shopping",
+      "isSystem": true
+    },
+    {
+      "id": "shop-home-goods",
+      "name": "Home Goods",
+      "color": "#9333ea",
+      "icon": "🛋️",
+      "parentId": "shopping",
+      "isSystem": true
+    },
+    {
+      "id": "shop-hardware",
+      "name": "Hardware",
+      "color": "#9333ea",
+      "icon": "🔩",
+      "parentId": "shopping",
+      "isSystem": true
+    },
+    {
+      "id": "shop-department",
+      "name": "Department Stores",
+      "color": "#9333ea",
+      "icon": "🏬",
+      "parentId": "shopping",
+      "isSystem": true
+    },
+    {
+      "id": "shop-online",
+      "name": "Online Shopping",
+      "color": "#9333ea",
+      "icon": "📦",
+      "parentId": "shopping",
+      "isSystem": true
+    },
+    {
+      "id": "shop-personal-care",
+      "name": "Personal Care",
+      "color": "#9333ea",
+      "icon": "💇",
+      "parentId": "shopping",
+      "isSystem": true
+    },
+    {
+      "id": "shop-gifts",
+      "name": "Gifts",
+      "color": "#9333ea",
+      "icon": "🎀",
+      "parentId": "shopping",
+      "isSystem": true
+    },
+    {
+      "id": "entertainment",
+      "name": "Entertainment",
+      "color": "#e11d48",
+      "icon": "🎬",
+      "parentId": null,
+      "isSystem": true
+    },
+    {
+      "id": "ent-streaming",
+      "name": "Streaming Services",
+      "color": "#e11d48",
+      "icon": "📺",
+      "parentId": "entertainment",
+      "isSystem": true
+    },
+    {
+      "id": "ent-movies",
+      "name": "Movies",
+      "color": "#e11d48",
+      "icon": "🍿",
+      "parentId": "entertainment",
+      "isSystem": true
+    },
+    {
+      "id": "ent-sports",
+      "name": "Sports",
+      "color": "#e11d48",
+      "icon": "⚽",
+      "parentId": "entertainment",
+      "isSystem": true
+    },
+    {
+      "id": "ent-hobbies",
+      "name": "Hobbies",
+      "color": "#e11d48",
+      "icon": "🎮",
+      "parentId": "entertainment",
+      "isSystem": true
+    },
+    {
+      "id": "ent-subscriptions",
+      "name": "Subscriptions",
+      "color": "#e11d48",
+      "icon": "📰",
+      "parentId": "entertainment",
+      "isSystem": true
+    },
+    {
+      "id": "ent-airlines",
+      "name": "Airlines",
+      "color": "#e11d48",
+      "icon": "✈️",
+      "parentId": "entertainment",
+      "isSystem": true
+    },
+    {
+      "id": "ent-hotels",
+      "name": "Hotels / Lodging",
+      "color": "#e11d48",
+      "icon": "🏨",
+      "parentId": "entertainment",
+      "isSystem": true
+    },
+    {
+      "id": "ent-vacation-rentals",
+      "name": "Vacation Rentals",
+      "color": "#e11d48",
+      "icon": "🏡",
+      "parentId": "entertainment",
+      "isSystem": true
+    },
+    {
+      "id": "ent-cruises",
+      "name": "Cruise Lines",
+      "color": "#e11d48",
+      "icon": "🚢",
+      "parentId": "entertainment",
+      "isSystem": true
+    },
+    {
+      "id": "ent-theme-parks",
+      "name": "Theme Parks",
+      "color": "#e11d48",
+      "icon": "🎢",
+      "parentId": "entertainment",
+      "isSystem": true
+    },
+    {
+      "id": "ent-travel-insurance",
+      "name": "Travel Insurance",
+      "color": "#e11d48",
+      "icon": "🧳",
+      "parentId": "entertainment",
+      "isSystem": true
+    },
+    {
+      "id": "education",
+      "name": "Education",
+      "color": "#2563eb",
+      "icon": "📚",
+      "parentId": null,
+      "isSystem": true
+    },
+    {
+      "id": "edu-tuition",
+      "name": "Tuition",
+      "color": "#2563eb",
+      "icon": "🎓",
+      "parentId": "education",
+      "isSystem": true
+    },
+    {
+      "id": "edu-books",
+      "name": "Books",
+      "color": "#2563eb",
+      "icon": "📖",
+      "parentId": "education",
+      "isSystem": true
+    },
+    {
+      "id": "edu-courses",
+      "name": "Courses",
+      "color": "#2563eb",
+      "icon": "💻",
+      "parentId": "education",
+      "isSystem": true
+    },
+    {
+      "id": "edu-childcare",
+      "name": "Childcare",
+      "color": "#2563eb",
+      "icon": "👶",
+      "parentId": "education",
+      "isSystem": true
+    },
+    {
+      "id": "edu-supplies",
+      "name": "School Supplies",
+      "color": "#2563eb",
+      "icon": "✏️",
+      "parentId": "education",
+      "isSystem": true
+    },
+    {
+      "id": "financial",
+      "name": "Financial",
+      "color": "#6b7280",
+      "icon": "💰",
+      "parentId": null,
+      "isSystem": true
+    },
+    {
+      "id": "fin-bank-fees",
+      "name": "Bank Fees",
+      "color": "#6b7280",
+      "icon": "🏦",
+      "parentId": "financial",
+      "isSystem": true
+    },
+    {
+      "id": "fin-investments",
+      "name": "Investments",
+      "color": "#6b7280",
+      "icon": "📈",
+      "parentId": "financial",
+      "isSystem": true
+    },
+    {
+      "id": "fin-insurance",
+      "name": "Insurance",
+      "color": "#6b7280",
+      "icon": "🛡️",
+      "parentId": "financial",
+      "isSystem": true
+    },
+    {
+      "id": "fin-taxes",
+      "name": "Taxes",
+      "color": "#6b7280",
+      "icon": "🧾",
+      "parentId": "financial",
+      "isSystem": true
+    },
+    {
+      "id": "fin-loans",
+      "name": "Loans",
+      "color": "#6b7280",
+      "icon": "📄",
+      "parentId": "financial",
+      "isSystem": true
+    },
+    {
+      "id": "fin-credit-cards",
+      "name": "Credit Card Payments",
+      "color": "#6b7280",
+      "icon": "💳",
+      "parentId": "financial",
+      "isSystem": true
+    },
+    {
+      "id": "fin-subscriptions",
+      "name": "Subscriptions",
+      "color": "#6b7280",
+      "icon": "☁️",
+      "parentId": "financial",
+      "isSystem": true
+    },
+    {
+      "id": "family",
+      "name": "Family",
+      "color": "#d97706",
+      "icon": "👨‍👩‍👧",
+      "parentId": null,
+      "isSystem": true
+    },
+    {
+      "id": "family-childcare",
+      "name": "Childcare",
+      "color": "#d97706",
+      "icon": "🧒",
+      "parentId": "family",
+      "isSystem": true
+    },
+    {
+      "id": "family-activities",
+      "name": "Kids' Activities",
+      "color": "#d97706",
+      "icon": "🎨",
+      "parentId": "family",
+      "isSystem": true
+    },
+    {
+      "id": "family-baby",
+      "name": "Baby Supplies",
+      "color": "#d97706",
+      "icon": "🍼",
+      "parentId": "family",
+      "isSystem": true
+    },
+    {
+      "id": "family-education",
+      "name": "Education",
+      "color": "#d97706",
+      "icon": "📚",
+      "parentId": "family",
+      "isSystem": true
+    },
+    {
+      "id": "communications",
+      "name": "Communications",
+      "color": "#0d9488",
+      "icon": "📞",
+      "parentId": null,
+      "isSystem": true
+    },
+    {
+      "id": "comm-mobile",
+      "name": "Mobile Phone",
+      "color": "#0d9488",
+      "icon": "📱",
+      "parentId": "communications",
+      "isSystem": true
+    },
+    {
+      "id": "comm-internet",
+      "name": "Home Internet",
+      "color": "#0d9488",
+      "icon": "🌐",
+      "parentId": "communications",
+      "isSystem": true
+    },
+    {
+      "id": "comm-home-phone",
+      "name": "Home Phone",
+      "color": "#0d9488",
+      "icon": "☎️",
+      "parentId": "communications",
+      "isSystem": true
+    },
+    {
+      "id": "pets",
+      "name": "Pets",
+      "color": "#c2410c",
+      "icon": "🐾",
+      "parentId": null,
+      "isSystem": true
+    },
+    {
+      "id": "pets-vet",
+      "name": "Veterinary",
+      "color": "#c2410c",
+      "icon": "🏥",
+      "parentId": "pets",
+      "isSystem": true
+    },
+    {
+      "id": "pets-food",
+      "name": "Pet Food",
+      "color": "#c2410c",
+      "icon": "🦴",
+      "parentId": "pets",
+      "isSystem": true
+    },
+    {
+      "id": "pets-insurance",
+      "name": "Pet Insurance",
+      "color": "#c2410c",
+      "icon": "🐕",
+      "parentId": "pets",
+      "isSystem": true
+    },
+    {
+      "id": "pets-grooming",
+      "name": "Pet Grooming",
+      "color": "#c2410c",
+      "icon": "✂️",
+      "parentId": "pets",
+      "isSystem": true
+    },
+    {
+      "id": "other",
+      "name": "Other / Uncategorized",
+      "color": "#64748b",
+      "icon": "🎁",
+      "parentId": null,
+      "isSystem": true
+    },
+    {
+      "id": "other-misc",
+      "name": "Miscellaneous",
+      "color": "#64748b",
+      "icon": "📎",
+      "parentId": "other",
+      "isSystem": true
+    },
+    {
+      "id": "other-uncategorized",
+      "name": "Uncategorized",
+      "color": "#64748b",
+      "icon": "❓",
+      "parentId": "other",
+      "isSystem": true
+    },
+    {
+      "id": "other-refunds",
+      "name": "Refunds",
+      "color": "#64748b",
+      "icon": "↩️",
+      "parentId": "other",
+      "isSystem": true
+    },
+    {
+      "id": "other-atm",
+      "name": "Cash Withdrawals",
+      "color": "#64748b",
+      "icon": "🏧",
+      "parentId": "other",
+      "isSystem": true
+    },
+    {
+      "id": "other-transfers",
+      "name": "Transfers",
+      "color": "#64748b",
+      "icon": "🔀",
+      "parentId": "other",
+      "isSystem": true
+    },
+    {
+      "id": "income",
+      "name": "Income",
+      "color": "#15803d",
+      "icon": "💵",
+      "parentId": null,
+      "isSystem": true
+    },
+    {
+      "id": "income-salary",
+      "name": "Salary / Wages",
+      "color": "#15803d",
+      "icon": "💼",
+      "parentId": "income",
+      "isSystem": true
+    },
+    {
+      "id": "income-freelance",
+      "name": "Freelance",
+      "color": "#15803d",
+      "icon": "🖥️",
+      "parentId": "income",
+      "isSystem": true
+    },
+    {
+      "id": "income-investment",
+      "name": "Investment Income",
+      "color": "#15803d",
+      "icon": "📊",
+      "parentId": "income",
+      "isSystem": true
+    },
+    {
+      "id": "income-benefits",
+      "name": "Government Benefits",
+      "color": "#15803d",
+      "icon": "🏛️",
+      "parentId": "income",
+      "isSystem": true
+    },
+    {
+      "id": "income-refunds",
+      "name": "Refunds",
+      "color": "#15803d",
+      "icon": "💸",
+      "parentId": "income",
+      "isSystem": true
+    },
+    {
+      "id": "income-gifts",
+      "name": "Gifts Received",
+      "color": "#15803d",
+      "icon": "🎁",
+      "parentId": "income",
+      "isSystem": true
+    },
+    {
+      "id": "income-rental",
+      "name": "Rental Income",
+      "color": "#15803d",
+      "icon": "🏠",
+      "parentId": "income",
+      "isSystem": true
+    },
+    {
+      "id": "income-other",
+      "name": "Other Income",
+      "color": "#15803d",
+      "icon": "💰",
+      "parentId": "income",
+      "isSystem": true
+    }
+  ]
+}

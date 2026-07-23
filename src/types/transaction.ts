@@ -103,5 +103,5 @@ export interface ParsedRow {
   rawText: string
 }
 
-export type SortField = 'date' | 'description' | 'amount' | 'categoryId'
+export type SortField = 'date' | 'description' | 'amount' | 'type' | 'categoryId'
 export type SortDirection = 'asc' | 'desc'

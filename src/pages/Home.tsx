@@ -1,14 +1,16 @@
 import { Link } from 'react-router-dom'
+import { useDateFilteredTransactions } from '@/context/DateRangeContext'
 import { useTransactions } from '@/hooks/useTransactions'
 import { formatCurrency } from '@/lib/utils'
 import { useCharts } from '@/hooks/useCharts'
 import { useCategories } from '@/hooks/useCategories'
 
 export function Home() {
-  const { transactions, loading } = useTransactions()
+  const { transactions: allTransactions, loading } = useTransactions()
+  const transactions = useDateFilteredTransactions(allTransactions)
   const { categories } = useCategories()
   const { totals } = useCharts(transactions, categories)
-  const hasData = transactions.length > 0
+  const hasData = allTransactions.length > 0
 
   return (
     <div className="home-page">

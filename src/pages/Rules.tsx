@@ -1,4 +1,10 @@
-import { RuleEditor, type RuleApplyMode } from '@/components/RuleEditor'
+import { useCallback, useMemo } from 'react'
+import { useLocation, useNavigate } from 'react-router-dom'
+import {
+  RuleEditor,
+  type RuleApplyMode,
+  type RuleEditorPrefill,
+} from '@/components/RuleEditor'
 import { ToastContainer } from '@/components/Toast'
 import { useRules } from '@/hooks/useRules'
 import { useCategories } from '@/hooks/useCategories'
@@ -8,11 +14,43 @@ import { DEFAULT_KEYWORD_RULES } from '@/lib/categorizer/defaultRules'
 import { describeRule, primaryKeyword } from '@/lib/rules/evaluate'
 import type { Rule } from '@/types/transaction'
 
+/** Location state from Reports → Rules prefill */
+export interface RulesLocationState {
+  prefillDescription?: string
+  prefillCategoryId?: string
+}
+
 export function Rules() {
-  const { rules, addLayered, update, toggle, remove } = useRules()
+  const { rules, loading: rulesLoading, addLayered, update, toggle, remove } = useRules()
   const { categories } = useCategories()
   const { transactions, recategorize } = useTransactions()
   const { toasts, show, dismiss } = useToast()
+  const location = useLocation()
+  const navigate = useNavigate()
+
+  const locationState = (location.state ?? null) as RulesLocationState | null
+
+  const prefill: RuleEditorPrefill | null = useMemo(() => {
+    const fromState = locationState?.prefillDescription?.trim()
+    const params = new URLSearchParams(location.search)
+    const fromQuery = params.get('description')?.trim() || params.get('q')?.trim()
+    const description = fromState || fromQuery
+    if (!description) return null
+    return {
+      description,
+      categoryId:
+        locationState?.prefillCategoryId ||
+        params.get('categoryId') ||
+        undefined,
+    }
+  }, [locationState, location.search])
+
+  const clearPrefill = useCallback(() => {
+    // Drop one-shot navigation state / query so back/refresh doesn't re-apply
+    if (locationState?.prefillDescription || location.search.includes('description') || location.search.includes('q=')) {
+      navigate('/rules', { replace: true, state: null })
+    }
+  }, [locationState, location.search, navigate])
 
   const applyIfNeeded = async (nextRules: Rule[], applyMode: RuleApplyMode) => {
     if (applyMode !== 'all') return
@@ -29,10 +67,29 @@ export function Rules() {
         </p>
       </div>
 
+      {prefill && (
+        <div className="card prefill-banner" style={{ marginBottom: 16 }}>
+          <p className="text-sm" style={{ margin: 0 }}>
+            Prefilling rule from report summary:{' '}
+            <strong>“{prefill.description}”</strong>
+            {prefill.categoryId ? (
+              <>
+                {' '}
+                · suggested category pre-selected
+              </>
+            ) : null}
+            . Edit below, then save as a new rule or update the matched existing one.
+          </p>
+        </div>
+      )}
+
       <RuleEditor
         rules={rules}
         categories={categories}
         transactions={transactions}
+        prefill={prefill}
+        rulesLoading={rulesLoading}
+        onPrefillApplied={clearPrefill}
         onAddLayered={async (input, applyMode) => {
           const rule = await addLayered(input)
           const label = primaryKeyword(rule) || describeRule(rule).slice(0, 60)

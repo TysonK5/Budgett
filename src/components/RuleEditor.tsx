@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import type {
   Category,
   Rule,
@@ -10,6 +10,7 @@ import type {
 } from '@/types/transaction'
 import { getCategoryLabel } from '@/lib/categoryHelpers'
 import { CategorySelect } from '@/components/CategorySelect'
+import { SortableTh } from '@/components/SortableTh'
 import {
   findMatchingTransactionsByRule,
   formatCategoryBreakdown,
@@ -25,6 +26,9 @@ import {
   opsForField,
   primaryKeyword,
 } from '@/lib/rules/evaluate'
+import { sortItems, useTableSort } from '@/hooks/useTableSort'
+
+type RulesTableSort = 'rule' | 'category' | 'priority' | 'active'
 
 /** How to apply a rule after saving */
 export type RuleApplyMode = 'future' | 'all'
@@ -36,6 +40,14 @@ export interface RuleSaveInput {
   name?: string
 }
 
+/** Prefill from Reports (or other pages) when creating/updating a rule */
+export interface RuleEditorPrefill {
+  /** Description / summary keyword for the first condition */
+  description: string
+  /** Optional category to select as THEN */
+  categoryId?: string
+}
+
 interface RuleEditorProps {
   rules: Rule[]
   categories: Category[]
@@ -45,6 +57,44 @@ interface RuleEditorProps {
   onDelete: (id: string) => Promise<void>
   onUpdate?: (rule: Rule, applyMode: RuleApplyMode) => Promise<void>
   onApply?: () => Promise<void>
+  /** When set, prefill the form (and open matching rule for edit if found) */
+  prefill?: RuleEditorPrefill | null
+  /** Wait until rules are loaded before matching existing rules */
+  rulesLoading?: boolean
+  /** Called after prefill has been applied so the parent can clear location state */
+  onPrefillApplied?: () => void
+}
+
+function findMatchingRule(rules: Rule[], description: string): Rule | undefined {
+  const needle = description.trim().toUpperCase()
+  if (!needle) return undefined
+
+  // Exact keyword / condition match first
+  for (const rule of rules) {
+    const kw = primaryKeyword(rule).toUpperCase()
+    if (kw && kw === needle) return rule
+    const n = normalizeRule(rule)
+    for (const layer of n.layers) {
+      for (const c of layer.conditions) {
+        if (
+          c.field === 'description' &&
+          c.value.trim().toUpperCase() === needle
+        ) {
+          return rule
+        }
+      }
+    }
+  }
+
+  // Soft: existing rule keyword is contained in the summary (or vice versa)
+  for (const rule of rules) {
+    const kw = primaryKeyword(rule).toUpperCase()
+    if (kw.length >= 3 && (needle.includes(kw) || kw.includes(needle))) {
+      return rule
+    }
+  }
+
+  return undefined
 }
 
 function draftRule(
@@ -72,22 +122,88 @@ export function RuleEditor({
   onDelete,
   onUpdate,
   onApply,
+  prefill = null,
+  rulesLoading = false,
+  onPrefillApplied,
 }: RuleEditorProps) {
+  const defaultCategoryId =
+    categories.find((c) => c.parentId === null && c.id !== 'income')?.id ??
+    categories[0]?.id ??
+    'other-uncategorized'
+
   const [layerJoin, setLayerJoin] = useState<RuleJoin>('AND')
   const [layers, setLayers] = useState<RuleLayer[]>(() => [emptyLayer('AND')])
-  const [categoryId, setCategoryId] = useState(
-    () =>
-      categories.find((c) => c.parentId === null && c.id !== 'income')?.id ??
-      categories[0]?.id ??
-      'other-uncategorized'
-  )
+  const [categoryId, setCategoryId] = useState(defaultCategoryId)
   const [saving, setSaving] = useState(false)
   const [editingId, setEditingId] = useState<string | null>(null)
+  const formRef = useRef<HTMLFormElement>(null)
+  const lastPrefillRef = useRef<string | null>(null)
+  const rulesSort = useTableSort<RulesTableSort>(
+    'rules-list',
+    { field: 'priority', direction: 'asc' },
+    ['rule', 'category', 'priority', 'active'] as const
+  )
 
   const draft = useMemo(
     () => draftRule(layers, layerJoin, categoryId),
     [layers, layerJoin, categoryId]
   )
+
+  // Apply prefill from Reports when navigating with a summary keyword
+  useEffect(() => {
+    if (!prefill?.description?.trim()) {
+      // Allow the same summary to prefill again on a later visit
+      if (!prefill) lastPrefillRef.current = null
+      return
+    }
+    if (rulesLoading) return
+
+    const desc = prefill.description.trim()
+    const token = `${desc}::${prefill.categoryId ?? ''}`
+    if (lastPrefillRef.current === token) return
+    lastPrefillRef.current = token
+
+    const existing = findMatchingRule(rules, desc)
+    if (existing) {
+      const n = normalizeRule(existing)
+      setLayers(
+        n.layers.map((l) => ({
+          ...l,
+          id: l.id || generateId(),
+          conditions: l.conditions.map((c) => ({
+            ...c,
+            id: c.id || generateId(),
+          })),
+        }))
+      )
+      setLayerJoin(n.layerJoin)
+      setCategoryId(prefill.categoryId || n.categoryId)
+      setEditingId(n.id)
+    } else {
+      setLayers([
+        {
+          id: generateId(),
+          join: 'AND',
+          conditions: [emptyCondition('description', 'contains', desc)],
+        },
+      ])
+      setLayerJoin('AND')
+      setCategoryId(prefill.categoryId || defaultCategoryId)
+      setEditingId(null)
+    }
+
+    // Scroll form into view after paint
+    requestAnimationFrame(() => {
+      formRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+      const input = formRef.current?.querySelector<HTMLInputElement>(
+        'input.input[placeholder="keyword…"]'
+      )
+      input?.focus()
+      input?.select()
+    })
+
+    onPrefillApplied?.()
+  }, [prefill, rules, rulesLoading, defaultCategoryId, onPrefillApplied])
 
   const matchPreview = useMemo(() => {
     const hasContent = layers.some((l) =>
@@ -218,11 +334,29 @@ export function RuleEditor({
     void handleSave('future')
   }
 
-  const catMap = new Map(categories.map((c) => [c.id, c]))
+  const catMap = useMemo(
+    () => new Map(categories.map((c) => [c.id, c])),
+    [categories]
+  )
+
+  const sortedRules = useMemo(
+    () =>
+      sortItems(rules, rulesSort.field, rulesSort.direction, (rule, field) => {
+        if (field === 'rule') return primaryKeyword(rule) || describeRule(rule)
+        if (field === 'category') return getCategoryLabel(catMap, rule.categoryId)
+        if (field === 'priority') return rule.priority
+        return rule.isActive ? 0 : 1
+      }),
+    [rules, rulesSort.field, rulesSort.direction, catMap]
+  )
 
   return (
     <div className="rule-editor">
-      <form className="card rule-form" onSubmit={(e) => void handleSubmit(e)}>
+      <form
+        ref={formRef}
+        className="card rule-form"
+        onSubmit={(e) => void handleSubmit(e)}
+      >
         <h3>{editingId ? 'Edit rule' : 'Add custom rule'}</h3>
         <p className="text-sm text-muted" style={{ marginBottom: 12 }}>
           Build an <strong>IF</strong> rule with layers. Conditions inside a layer use{' '}
@@ -526,15 +660,43 @@ export function RuleEditor({
           <table className="data-table">
             <thead>
               <tr>
-                <th>Rule</th>
-                <th>Category</th>
-                <th>Priority</th>
-                <th>Active</th>
+                <SortableTh
+                  field="rule"
+                  activeField={rulesSort.field}
+                  direction={rulesSort.direction}
+                  onToggle={(f) => rulesSort.toggleSort(f, 'asc')}
+                >
+                  Rule
+                </SortableTh>
+                <SortableTh
+                  field="category"
+                  activeField={rulesSort.field}
+                  direction={rulesSort.direction}
+                  onToggle={(f) => rulesSort.toggleSort(f, 'asc')}
+                >
+                  Category
+                </SortableTh>
+                <SortableTh
+                  field="priority"
+                  activeField={rulesSort.field}
+                  direction={rulesSort.direction}
+                  onToggle={(f) => rulesSort.toggleSort(f, 'asc')}
+                >
+                  Priority
+                </SortableTh>
+                <SortableTh
+                  field="active"
+                  activeField={rulesSort.field}
+                  direction={rulesSort.direction}
+                  onToggle={(f) => rulesSort.toggleSort(f, 'asc')}
+                >
+                  Active
+                </SortableTh>
                 <th></th>
               </tr>
             </thead>
             <tbody>
-              {rules.map((rule) => {
+              {sortedRules.map((rule) => {
                 const cat = catMap.get(rule.categoryId)
                 const label = getCategoryLabel(catMap, rule.categoryId)
                 const summary = describeRule(rule)

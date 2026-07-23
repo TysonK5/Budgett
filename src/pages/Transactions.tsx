@@ -1,17 +1,23 @@
 import { Link } from 'react-router-dom'
 import { TransactionTable } from '@/components/TransactionTable'
 import { ToastContainer } from '@/components/Toast'
+import {
+  useDateFilteredTransactions,
+  useDateRange,
+} from '@/context/DateRangeContext'
 import { useTransactions } from '@/hooks/useTransactions'
 import { useCategories } from '@/hooks/useCategories'
 import { useToast } from '@/hooks/useToast'
 
 export function Transactions() {
-  const { transactions, loading, update, remove } = useTransactions()
+  const { transactions: allTransactions, loading, update, remove } = useTransactions()
+  const transactions = useDateFilteredTransactions(allTransactions)
+  const { label: rangeLabel, preset } = useDateRange()
   const { categories } = useCategories()
   const { toasts, show, dismiss } = useToast()
 
   const handleCategoryChange = async (id: string, categoryId: string) => {
-    const t = transactions.find((x) => x.id === id)
+    const t = allTransactions.find((x) => x.id === id)
     if (!t) return
     await update({ ...t, categoryId })
     show('Category updated', 'success')
@@ -28,7 +34,10 @@ export function Transactions() {
       <div className="page-header flex justify-between items-center" style={{ flexWrap: 'wrap', gap: 12 }}>
         <div>
           <h1>Transactions</h1>
-          <p className="text-muted">Search, filter, and recategorize your activity</p>
+          <p className="text-muted">
+            Search, filter, and recategorize your activity
+            {preset !== 'all' ? ` · ${rangeLabel}` : ''}
+          </p>
         </div>
         <Link to="/upload" className="btn btn-primary">
           + Upload more
@@ -38,7 +47,7 @@ export function Transactions() {
       <div className="card">
         {loading ? (
           <div className="skeleton" style={{ height: 200 }} />
-        ) : transactions.length === 0 ? (
+        ) : allTransactions.length === 0 ? (
           <div className="empty-state text-center" style={{ padding: 32 }}>
             <p className="text-muted" style={{ marginBottom: 12 }}>
               No transactions yet.
@@ -46,6 +55,12 @@ export function Transactions() {
             <Link to="/upload" className="btn btn-primary">
               Upload a statement
             </Link>
+          </div>
+        ) : transactions.length === 0 ? (
+          <div className="empty-state text-center" style={{ padding: 32 }}>
+            <p className="text-muted">
+              No transactions in {rangeLabel}. Widen the date range in the top bar.
+            </p>
           </div>
         ) : (
           <TransactionTable

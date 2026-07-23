@@ -9,6 +9,7 @@ import {
   STORE_RULES,
   STORE_SETTINGS,
   STORE_TRANSACTIONS,
+  TAXONOMY_VERSION,
 } from '@/lib/constants'
 import { normalizeCategory } from '@/lib/categoryHelpers'
 
@@ -41,8 +42,6 @@ interface BudgettDB extends DBSchema {
 let dbPromise: Promise<IDBPDatabase<BudgettDB>> | null = null
 
 const TAXONOMY_VERSION_KEY = 'taxonomyVersion'
-/** Bump with major category-set changes (pairs with DB_VERSION conceptually) */
-const TAXONOMY_VERSION = 3
 
 /**
  * Full system-category swap: write all defaults, drop obsolete system cats,
